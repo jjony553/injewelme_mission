@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:injewelme_mission/common/fonts.dart';
+
+import '../common/colors.dart';
 
 class FoodInfo extends StatefulWidget {
   final String name;
@@ -7,7 +10,7 @@ class FoodInfo extends StatefulWidget {
   final String ingredient;
   final int quantity;
   final int foodKcal;
-  FoodInfo(
+  const FoodInfo(
       {super.key,
       required this.name,
       required this.type,
@@ -28,12 +31,8 @@ class _FoodInfoState extends State<FoodInfo> {
       padding: const EdgeInsets.only(top: 10.0, left: 16, right: 16),
       decoration: BoxDecoration(
         border: Border(
-          right: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
-          ),
           bottom: BorderSide(
-            color: Colors.grey,
+            color: borderColor,
             width: 0.5,
           ),
         ),
@@ -45,7 +44,8 @@ class _FoodInfoState extends State<FoodInfo> {
             children: [
               Text(
                 widget.name,
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: titleFontSize),
               ),
               IconToggleButton(
                 isSelected: isSelected,
@@ -60,23 +60,21 @@ class _FoodInfoState extends State<FoodInfo> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text("종류"), Text(widget.type)],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text("재료"), Text(widget.ingredient)],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text("정량"), Text("${widget.quantity}g")],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text("칼로리"), Text("${widget.foodKcal}kcal")],
-          )
+          _buildItemRow("종류", widget.type),
+          _buildItemRow("재료", widget.ingredient),
+          _buildItemRow("정량", "${widget.quantity}g"),
+          _buildItemRow("칼로리", "${widget.foodKcal}kcal"),
         ],
+      ),
+    );
+  }
+
+  Widget _buildItemRow(String info, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text(info), Text(text)],
       ),
     );
   }
@@ -85,29 +83,27 @@ class _FoodInfoState extends State<FoodInfo> {
 class IconToggleButton extends StatelessWidget {
   final bool? isSelected;
   final Function? onPressed;
-  IconToggleButton({this.isSelected, this.onPressed});
+  const IconToggleButton({super.key, this.isSelected, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: IconButton(
-        iconSize: 30.0,
-        padding: EdgeInsets.all(5),
-        icon: Padding(
-            padding: EdgeInsets.zero,
-            child: isSelected == false
-                ? const Icon(
-                    CupertinoIcons.heart,
-                    color: Colors.redAccent,
-                  )
-                : const Icon(
-                    CupertinoIcons.heart_fill,
-                    color: Colors.redAccent,
-                  )),
-        onPressed: () {
-          onPressed!();
-        },
-      ),
+    return IconButton(
+      iconSize: 25.0,
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
+      icon: Container(
+          child: isSelected == false
+              ? const Icon(
+                  CupertinoIcons.heart,
+                  color: Colors.redAccent,
+                )
+              : const Icon(
+                  CupertinoIcons.heart_fill,
+                  color: Colors.redAccent,
+                )),
+      onPressed: () {
+        onPressed!();
+      },
     );
   }
 }

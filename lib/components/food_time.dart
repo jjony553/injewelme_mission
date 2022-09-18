@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../common/colors.dart';
+import '../common/fonts.dart';
+
 class FoodTime extends StatelessWidget {
   final String title;
   final int totalKcal;
@@ -14,11 +17,11 @@ class FoodTime extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-            color: Colors.grey,
+            color: borderColor,
             width: 0.5,
           ),
           bottom: BorderSide(
-            color: Colors.grey,
+            color: borderColor,
             width: 0.5,
           ),
         ),
@@ -28,9 +31,10 @@ class FoodTime extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            style: const TextStyle(
+                fontWeight: FontWeight.w600, fontSize: titleFontSize),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -38,11 +42,11 @@ class FoodTime extends StatelessWidget {
               Text(
                 "$totalKcal",
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xff2bbcab),
+                    fontSize: titleFontSize,
+                    color: kcalColor,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               const Text(
